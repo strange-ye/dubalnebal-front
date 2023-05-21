@@ -1,6 +1,21 @@
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const isLoggedIn = localStorage.getItem("access_token");
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("access_token");
+    navigate("/");
+  };
+
+  const profileChange = () => {
+    if (localStorage.getItem("access_token")) {
+      navigate("/update");
+    }
+  };
+
   return (
     <div>
       <ul>
@@ -8,10 +23,18 @@ export default function Header() {
           <Link to={"/"}>Home</Link>
         </li>
         <li>
-          <Link to={"/login"}>Login</Link>
+          {isLoggedIn ? (
+            <div onClick={logout}>logout</div>
+          ) : (
+            <Link to={"/login"}>Login</Link>
+          )}
         </li>
         <li>
-          <Link to={"/signup"}>Sign Up</Link>
+          {isLoggedIn ? (
+            <div onClick={profileChange}>프로필 변경</div>
+          ) : (
+            <Link to={"/signup"}>Sign Up</Link>
+          )}
         </li>
       </ul>
     </div>

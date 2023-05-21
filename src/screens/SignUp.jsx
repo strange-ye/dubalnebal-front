@@ -7,16 +7,39 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
+    // fetch("http://localhost:8080/api/user/signup", {
+    //   method: "POST",
+    //   "Content-Type": "application/json",
+    //   body: JSON.stringify(data),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => console.log(data));
+    try {
+      axios({
+        method: "post",
+        url: "http://localhost:8080/api/user/signup",
+        data: data,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => console.log(JSON.parse(res)))
+        .catch((err) => console.log(err));
+    } catch {
+      console.log("error occured");
+    }
   };
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="userId">아이디</label>
+        <label htmlFor="user_identifier">아이디</label>
         <input
-          id="userId"
-          {...register("userId", {
+          id="user_identifier"
+          {...register("user_identifier", {
             required: true,
             minLength: {
               value: 8,
@@ -28,12 +51,12 @@ const SignUp = () => {
             },
           })}
         />
-        {errors?.userId?.message}
-        <label htmlFor="password">비밀번호</label>
+        {errors?.user_identifier?.message}
+        <label htmlFor="user_password">비밀번호</label>
         <input
-          id="password"
+          id="user_password"
           type="password"
-          {...register("password", {
+          {...register("user_password", {
             required: true,
             minLength: {
               value: 8,
@@ -45,12 +68,12 @@ const SignUp = () => {
             },
           })}
         />
-        {errors?.password?.message}
-        <label htmlFor="nickname">닉네임</label>
+        {errors?.user_password?.message}
+        <label htmlFor="userName">닉네임</label>
         <input
-          id="nickname"
-          type="nickname"
-          {...register("nickname", {
+          id="user_name"
+          type="text"
+          {...register("user_name", {
             required: true,
             minLength: {
               value: 8,
@@ -62,12 +85,12 @@ const SignUp = () => {
             },
           })}
         />
-        {errors?.nickname?.message}
-        <label htmlFor="profileImage">닉네임</label>
+        {errors?.user_name?.message}
+        <label htmlFor="user_email">이메일</label>
         <input
-          id="profileImage"
-          type="profileImage"
-          {...register("profileImage", {
+          id="user_email"
+          type="email"
+          {...register("user_email", {
             required: true,
             minLength: {
               value: 8,
@@ -79,7 +102,7 @@ const SignUp = () => {
             },
           })}
         />
-        {errors?.profileImage?.message}
+        {errors?.user_email?.message}
         <button type="submit">제출</button>
       </form>
     </div>
