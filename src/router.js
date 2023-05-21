@@ -5,6 +5,7 @@ import Login from "./screens/Login";
 import SignUp from "./screens/SignUp";
 import NotFound from "./screens/NotFound";
 import Error from "./components/Error";
+import Update from "./screens/Update";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,11 @@ const router = createBrowserRouter([
       {
         path: "signup",
         element: <SignUp />,
+        errorElement: <Error />,
+      },
+      {
+        path: "update",
+        element: <Update />,
         errorElement: <Error />,
       },
     ],
