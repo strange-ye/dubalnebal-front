@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-const SignUp = () => {
+const PartyWrite = () => {
   const {
     register,
     handleSubmit,
@@ -109,4 +109,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default PartyWrite;
