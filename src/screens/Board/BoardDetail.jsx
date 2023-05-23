@@ -2,6 +2,7 @@ import styled from "styled-components";
 import happyDog from "../../assets/image/happyDog.png";
 import userImage1 from "../../assets/image/userImage1.png";
 import Comment from "../../components/Comment";
+import CommentWriter from "../../components/CommentWriter";
 
 const BoardContainer = styled.div`
   display: flex;
@@ -152,6 +153,7 @@ export default function BoardDetail() {
           <CommentNumber>32개의 댓글</CommentNumber>
           <Triangle />
         </CommentTop>
+        <CommentWriter />
         <CommentList>
           {[1, 2, 3, 4, 5, 6].map((e, index) => {
             return <Comment />;

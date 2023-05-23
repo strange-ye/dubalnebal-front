@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const PartyWrite = () => {
   const {
@@ -7,6 +8,8 @@ const PartyWrite = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
@@ -20,13 +23,17 @@ const PartyWrite = () => {
     try {
       axios({
         method: "post",
-        url: "http://localhost:8080/api/user/signup",
+        url: "http://localhost:8080/api/party",
         data: data,
         headers: {
           "Content-Type": "application/json",
+          HEADER_AUTH: localStorage.getItem("access_token"),
         },
       })
-        .then((res) => console.log(JSON.parse(res)))
+        .then((res) => {
+          alert("파티 생성 성공!");
+          navigate("/party");
+        })
         .catch((err) => console.log(err));
     } catch {
       console.log("error occured");
@@ -36,47 +43,32 @@ const PartyWrite = () => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="user_identifier">아이디</label>
+        <label htmlFor="party_duration">모집 기간</label>
         <input
-          id="user_identifier"
-          {...register("user_identifier", {
+          id="party_duration"
+          type="datetime-local"
+          {...register("party_duration", {
             required: true,
-            minLength: {
-              value: 8,
-              message: "Please enter at least 8 digits of your ID",
-            },
-            maxLength: {
-              value: 20,
-              message: "Please enter your ID in 20 digits or less",
-            },
           })}
         />
-        {errors?.user_identifier?.message}
-        <label htmlFor="user_password">비밀번호</label>
+        {errors?.party_duration?.message}
+        <label htmlFor="party_depart_date">출발 시</label>
         <input
-          id="user_password"
-          type="password"
-          {...register("user_password", {
+          id="party_depart_date"
+          type="datetime-local"
+          {...register("party_depart_date", {
             required: true,
-            minLength: {
-              value: 8,
-              message: "Please enter at least 8 digits of your password",
-            },
-            maxLength: {
-              value: 20,
-              message: "Please enter the password in 20 digits or less",
-            },
           })}
         />
-        {errors?.user_password?.message}
-        <label htmlFor="userName">닉네임</label>
+        {errors?.party_depart_date?.message}
+        <label htmlFor="party_limit">최대 인원</label>
         <input
-          id="user_name"
-          type="text"
-          {...register("user_name", {
+          id="party_limit"
+          type="number"
+          {...register("party_limit", {
             required: true,
             minLength: {
-              value: 8,
+              value: 1,
               message: "Please enter at least 8 digits of your nickname",
             },
             maxLength: {
@@ -85,24 +77,33 @@ const PartyWrite = () => {
             },
           })}
         />
-        {errors?.user_name?.message}
-        <label htmlFor="user_email">이메일</label>
+        {errors?.party_limit?.message}
+        <label htmlFor="course_id">코스 번호</label>
         <input
-          id="user_email"
-          type="email"
-          {...register("user_email", {
+          id="course_id"
+          type="number"
+          {...register("course_id", {
             required: true,
             minLength: {
-              value: 8,
+              value: 1,
               message: "Please enter at least 8 digits of your profileImage",
-            },
-            maxLength: {
-              value: 20,
-              message: "Please enter the profileImage in 20 digits or less",
             },
           })}
         />
-        {errors?.user_email?.message}
+        {errors?.course_id?.message}
+        <label htmlFor="party_title">파티 제목</label>
+        <input
+          id="party_title"
+          type="text"
+          {...register("party_title", {
+            required: true,
+            minLength: {
+              value: 1,
+              message: "Please enter at least 8 digits of your profileImage",
+            },
+          })}
+        />
+        {errors?.party_title?.message}
         <button type="submit">제출</button>
       </form>
     </div>
