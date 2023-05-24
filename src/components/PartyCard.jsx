@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import PartyImage1 from "../assets/image/PartyImage1.png";
 import styled from "styled-components";
+import axios from "axios";
 
 const PartyContainer = styled(motion.div)`
   display: flex;
@@ -99,31 +100,60 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-export default function PartyCard({ isModalOpen, openModal, closeModal }) {
+export default function PartyCard({
+  info,
+  isModalOpen,
+  openModal,
+  closeModal,
+}) {
+  const {
+    party_id,
+    course_name,
+    course_location,
+    course_level,
+    course_time,
+    course_km,
+    party_limit,
+    party_depart_date,
+  } = info;
+
+  const participate = () => {
+    (async () => {
+      const response = await axios({
+        method: "post",
+        url: `http://localhost:8080/api/party/${party_id}`,
+        headers: {
+          "Content-Type": "application/json",
+          HEADER_AUTH: localStorage.getItem("access_token"),
+        },
+      });
+      console.log(response);
+    })();
+  };
   return (
     <PartyContainer>
       <PartyImage />
       <PartyBody>
-        <PartyTitle>현충원 나들길</PartyTitle>
+        <PartyTitle>{course_name}</PartyTitle>
         <PartyInfo>
           <PartyInfoLeft>
-            <PartyLocation>서울 동작구</PartyLocation>
+            <PartyLocation>{course_location}</PartyLocation>
           </PartyInfoLeft>
           <PartyInfoRight>
-            <PartyDifficulty>보통</PartyDifficulty>
-            <PartyTime>4시간 30분</PartyTime>
-            <PartyKm>7.34km</PartyKm>
+            <PartyDifficulty>{course_level}</PartyDifficulty>
+            <PartyTime>{course_time}</PartyTime>
+            <PartyKm>{course_km}</PartyKm>
           </PartyInfoRight>
         </PartyInfo>
         <PartyConstraint>
           <PartyConstraintLeft>
             <div>현재 인원 / 제한 인원 :</div>
-            <div>1 / 6</div>
+            <div>1 / {party_limit}</div>
           </PartyConstraintLeft>
-          <PartyConstraintRight>2023.05.15</PartyConstraintRight>
+          <PartyConstraintRight>{party_depart_date}</PartyConstraintRight>
         </PartyConstraint>
         <PartyButtons>
-          <Button>참여</Button>
+          <Button onClick={participate}>참여</Button>
           <Button>자세히보기</Button>
         </PartyButtons>
       </PartyBody>

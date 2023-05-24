@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import BoardGrid from "../../components/BoardGrid";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const BoardContainer = styled.div`
   flex: 1;
@@ -31,13 +33,35 @@ const Subtitle = styled.div`
 `;
 
 const BoardList = styled.ul`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  margin: 0 64px;
+  padding: 0 128px;
+  box-sizing: border-box;
   gap: 32px;
 `;
 
 export default function Board() {
+  const [board, setBoard] = useState([]);
+
+  useEffect(() => {
+    try {
+      axios({
+        method: "get",
+        url: "http://localhost:8080/api/board",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          setBoard(res.data);
+        })
+        .catch((err) => console.log(err));
+    } catch {
+      console.log("error occured");
+    }
+  }, []);
+
   return (
     <BoardContainer>
       <BoardHeader>
@@ -45,9 +69,10 @@ export default function Board() {
         <Subtitle>당신의 생각을 나누세요</Subtitle>
       </BoardHeader>
       <BoardList>
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((e, i) => {
-          return <BoardGrid key={i} />;
-        })}
+        {board &&
+          board.map((info, i) => {
+            return <BoardGrid key={i} info={info} />;
+          })}
       </BoardList>
       <Link to="/board/write">write</Link>
     </BoardContainer>

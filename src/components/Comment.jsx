@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import userImage1 from "../assets/image/userImage1.png";
 
-const CommentContainer = styled.div`
+const CommentContainer = styled.li`
   display: flex;
   flex-direction: column;
 `;
@@ -62,23 +62,25 @@ const Button = styled.button`
   color: #444748;
 `;
 
-export default function Comment() {
+export default function Comment({ info }) {
+  const {
+    comment_id,
+    comment_content,
+    comment_created_at,
+    user_image,
+    user_name,
+  } = info;
   return (
     <CommentContainer>
       <Top>
         <User>
           <UserImage src={userImage1} />
-          <UserName>사용자 이름</UserName>
+          <UserName>{user_name}</UserName>
         </User>
-        <CommentContent>
-          대충 이런 내용의 댓글이 잔득 쓰인다는 내용 적을 것 .대충 이런 내용의
-          댓글이 잔득 쓰인다는 내용 적을 것 .대충 이런 내용의 댓글이 잔득
-          쓰인다는 내용 적을 것 .대충 이런 내용의 댓글이 잔득 쓰인다는 내용 적을
-          것 .대충 이런 내용의 댓글이 잔득 쓰인다는 내용 적을 것 .
-        </CommentContent>
+        <CommentContent>{comment_content}</CommentContent>
       </Top>
       <Bottom>
-        <Date>2023.05.17</Date>
+        <Date>{comment_created_at}</Date>
         <Button>삭제</Button>
         <Button>수정</Button>
       </Bottom>
