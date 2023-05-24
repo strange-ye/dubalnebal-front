@@ -11,6 +11,8 @@ import BoardDetail from "./screens/Board/BoardDetail";
 import Party from "./screens/Party/Party";
 import BoardWrite from "./screens/Board/BoardWrite";
 import PartyWrite from "./screens/Party/PartyWrite";
+import Profile from "./screens/User/Profile";
+import BoardUpdate from "./screens/Board/BoardUpdate";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +55,11 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
+        path: "board/update/:id",
+        element: <BoardUpdate />,
+        errorElement: <Error />,
+      },
+      {
         path: "party",
         element: <Party />,
         errorElement: <Error />,
@@ -60,6 +67,11 @@ const router = createBrowserRouter([
       {
         path: "party/write",
         element: <PartyWrite />,
+        errorElement: <Error />,
+      },
+      {
+        path: "user/profile",
+        element: <Profile />,
         errorElement: <Error />,
       },
     ],

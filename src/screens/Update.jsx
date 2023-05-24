@@ -23,7 +23,10 @@ const Update = () => {
           HEADER_AUTH: localStorage.getItem("access_token"),
         },
       })
-        .then((res) => console.log("update success"))
+        .then((res) => {
+          alert("사용자 정보 변경 성공");
+          navigate("/user/profile");
+        })
         .catch((err) => console.log(err));
     } catch {
       console.log("error occured");

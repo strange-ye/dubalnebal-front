@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import PartyCard from "../../components/PartyCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const PartyContainer = styled.div`
   flex: 1;
@@ -54,6 +55,26 @@ export default function Party() {
     setIsModalOpen(false);
   };
 
+  const [party, setParty] = useState([]);
+
+  useEffect(() => {
+    try {
+      axios({
+        method: "get",
+        url: "http://localhost:8080/api/party",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          setParty(res.data);
+        })
+        .catch((err) => console.log(err));
+    } catch {
+      console.log("error occured");
+    }
+  }, []);
+
   return (
     <PartyContainer>
       <PartyHeader>
@@ -61,16 +82,18 @@ export default function Party() {
         <Subtitle>새로운 만남을 약속해보세요</Subtitle>
       </PartyHeader>
       <PartyList>
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((e, i) => {
-          return (
-            <PartyCard
-              key={i}
-              isModalOpen={isModalOpen}
-              openModal={openModal}
-              closeModal={closeModal}
-            />
-          );
-        })}
+        {party &&
+          party.map((info, i) => {
+            return (
+              <PartyCard
+                key={i}
+                isModalOpen={isModalOpen}
+                openModal={openModal}
+                closeModal={closeModal}
+                info={info}
+              />
+            );
+          })}
       </PartyList>
       <Link to="/party/write">write</Link>
     </PartyContainer>

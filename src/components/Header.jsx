@@ -62,6 +62,10 @@ const SignUpButton = styled.button`
   cursor: pointer;
 `;
 
+const Nav = styled.div`
+  cursor: pointer;
+`;
+
 export default function Header() {
   const isLoggedIn = localStorage.getItem("access_token");
   const navigate = useNavigate();
@@ -71,9 +75,9 @@ export default function Header() {
     navigate("/");
   };
 
-  const profileChange = () => {
+  const profile = () => {
     if (localStorage.getItem("access_token")) {
-      navigate("/update");
+      navigate("/user/profile");
     }
   };
 
@@ -95,7 +99,7 @@ export default function Header() {
       <HeaderRight>
         <li>
           {isLoggedIn ? (
-            <div onClick={logout}>logout</div>
+            <Nav onClick={logout}>logout</Nav>
           ) : (
             <Link to={"/login"}>
               <LoginButton>Login</LoginButton>
@@ -104,7 +108,7 @@ export default function Header() {
         </li>
         <li>
           {isLoggedIn ? (
-            <div onClick={profileChange}>프로필 변경</div>
+            <Nav onClick={profile}>프로필</Nav>
           ) : (
             <Link to={"/signup"}>
               <SignUpButton>Sign Up</SignUpButton>
