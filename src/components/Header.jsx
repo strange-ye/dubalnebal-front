@@ -1,6 +1,6 @@
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Logo from "../image/Logo.png";
 
 const HeaderContainer = styled.div`
   width: 100%;
@@ -8,10 +8,11 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: #f2f4f5;
+  background-color: rgb(255, 251, 245);
   border-bottom: 1px solid black;
   box-sizing: border-box;
-  padding: 0 64px;
+  padding: 0 216px;
+  font-family: "omyu_pretty";
 `;
 
 const HeaderLeft = styled.div`
@@ -19,25 +20,25 @@ const HeaderLeft = styled.div`
   flex-direction: row;
   align-items: center;
 
-  gap: 64px;
+  gap: 128px;
 `;
 
 const LeftNavigation = styled.ul`
   display: flex;
   flex-direction: row;
 
-  gap: 32px;
+  gap: 96px;
 `;
 
-const HeaderLogo = styled.div`
-  /* padding: 8px 16px; */
+const HeaderLogo = styled.img`
+  width: 64px;
 `;
 
 const HeaderRight = styled.ul`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 32px;
+  gap: 96px;
 
   font-size: 16px;
 `;
@@ -85,7 +86,7 @@ export default function Header() {
     <HeaderContainer>
       <HeaderLeft>
         <Link to={"/"}>
-          <HeaderLogo>DubalNebal</HeaderLogo>
+          <HeaderLogo src={Logo} />
         </Link>
         <LeftNavigation>
           <li>
@@ -94,12 +95,15 @@ export default function Header() {
           <li>
             <Link to={"/party"}>Party</Link>
           </li>
+          <li>
+            <Link to={"/Youtube"}>Youtube</Link>
+          </li>
         </LeftNavigation>
       </HeaderLeft>
       <HeaderRight>
         <li>
           {isLoggedIn ? (
-            <Nav onClick={logout}>logout</Nav>
+            <Nav onClick={logout}>Logout</Nav>
           ) : (
             <Link to={"/login"}>
               <LoginButton>Login</LoginButton>
@@ -108,7 +112,7 @@ export default function Header() {
         </li>
         <li>
           {isLoggedIn ? (
-            <Nav onClick={profile}>프로필</Nav>
+            <Nav onClick={profile}>Profile</Nav>
           ) : (
             <Link to={"/signup"}>
               <SignUpButton>Sign Up</SignUpButton>

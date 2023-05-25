@@ -15,7 +15,7 @@ const LoginContainer = styled.div`
   display: flex;
   flex-direction: row;
 
-  background-color: #f2f4f5;
+  background-color: rgb(255, 251, 245);
 `;
 
 const LoginLeft = styled.div`
@@ -89,7 +89,7 @@ const Input = styled.input`
   &:focus {
     outline: 1px solid #29bbd4;
   }
-  background: #eceeef;
+  background: #fff2f2;
 `;
 
 const ErrorMessage = styled.div`

@@ -4,6 +4,34 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+const PartyContainer = styled.div`
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: rgb(255, 251, 245);
+`;
+
+const PartyHeader = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 64px 0px;
+`;
+
+const Title = styled.div`
+  font-size: 36px;
+`;
+
+const Subtitle = styled.div`
+  font-size: 14px;
+  color: #8e9192;
+`;
+
 const Button = styled.button`
   padding: 8px 24px;
   background: #009fb6;
@@ -98,7 +126,11 @@ export default function BoardUpdate() {
   }, [navigate]);
 
   return (
-    <>
+    <PartyContainer>
+      <PartyHeader>
+        <Title>보드 작성</Title>
+        <Subtitle>다른 사람과 의견을 나누세요</Subtitle>
+      </PartyHeader>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <InputSet>
           <Label htmlFor="board_title">제목</Label>
@@ -162,6 +194,6 @@ export default function BoardUpdate() {
         </InputSet>
         <Button type="submit">포스트 업데이트</Button>
       </Form>
-    </>
+    </PartyContainer>
   );
 }
