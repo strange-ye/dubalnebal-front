@@ -16,12 +16,12 @@ const LoginContainer = styled(motion.div)`
   display: flex;
   flex-direction: row;
 
-  background-color: #f2f4f5;
+  background-color: rgb(255, 251, 245);
 `;
 
 const LoginLeft = styled.div`
   margin: auto;
-  translate: 0% -10%;
+  /* translate: 0% -10%; */
   flex: 1;
 `;
 
@@ -90,7 +90,7 @@ const Input = styled.input`
   &:focus {
     outline: 1px solid #29bbd4;
   }
-  background: #eceeef;
+  background: #fff2f2;
 `;
 
 const ErrorMessage = styled.div`
@@ -144,18 +144,25 @@ const Login = () => {
   // logic
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
+    const formData = new FormData();
+    console.log(data.image[0]);
+    formData.append("user_identifier", data.user_identifier);
+    formData.append("user_password", data.user_password);
+    formData.append("user_name", data.user_name);
+    formData.append("user_email", data.user_email);
+    formData.append("file", data.image[0]);
     try {
       axios({
         method: "post",
-        url: "http://localhost:8080/api/user/login",
-        data: data,
+        url: "http://localhost:8080/api/user/signup",
+        data: formData,
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       })
         .then((res) => {
           // console.log(res.data["access-token"]);
-          localStorage.setItem("access_token", res.data["access-token"]);
+          // localStorage.setItem("access_token", res.data["access-token"]);
           navigate("/");
         })
         .catch((err) => console.log(err));
@@ -165,7 +172,7 @@ const Login = () => {
   };
   useEffect(() => {
     if (localStorage.getItem("access_token")) {
-      navigate("/");
+      // navigate("/");
     }
   }, []);
   return (
@@ -187,14 +194,14 @@ const Login = () => {
                   id="user_identifier"
                   {...register("user_identifier", {
                     required: true,
-                    minLength: {
-                      value: 8,
-                      message: "Please enter at least 8 digits of your ID",
-                    },
-                    maxLength: {
-                      value: 20,
-                      message: "Please enter your ID in 20 digits or less",
-                    },
+                    // minLength: {
+                    //   value: 8,
+                    //   message: "Please enter at least 8 digits of your ID",
+                    // },
+                    // maxLength: {
+                    //   value: 20,
+                    //   message: "Please enter your ID in 20 digits or less",
+                    // },
                   })}
                 />
                 {errors?.user_identifier?.message ? (
@@ -210,15 +217,15 @@ const Login = () => {
                   type="password"
                   {...register("user_password", {
                     required: true,
-                    minLength: {
-                      value: 8,
-                      message:
-                        "Please enter at least 8 digits of your password",
-                    },
-                    maxLength: {
-                      value: 20,
-                      message: "Please enter the password in 20 digits or less",
-                    },
+                    // minLength: {
+                    //   value: 8,
+                    //   message:
+                    //     "Please enter at least 8 digits of your password",
+                    // },
+                    // maxLength: {
+                    //   value: 20,
+                    //   message: "Please enter the password in 20 digits or less",
+                    // },
                   })}
                 />
                 {errors?.user_password?.message ? (
@@ -231,15 +238,15 @@ const Login = () => {
                   id="user_name"
                   {...register("user_name", {
                     required: true,
-                    minLength: {
-                      value: 8,
-                      message:
-                        "Please enter at least 8 digits of your password",
-                    },
-                    maxLength: {
-                      value: 20,
-                      message: "Please enter the password in 20 digits or less",
-                    },
+                    // minLength: {
+                    //   value: 8,
+                    //   message:
+                    //     "Please enter at least 8 digits of your password",
+                    // },
+                    // maxLength: {
+                    //   value: 20,
+                    //   message: "Please enter the password in 20 digits or less",
+                    // },
                   })}
                 />
                 {errors?.user_name?.message ? (
@@ -252,19 +259,31 @@ const Login = () => {
                   id="user_email"
                   {...register("user_email", {
                     required: true,
-                    minLength: {
-                      value: 8,
-                      message:
-                        "Please enter at least 8 digits of your password",
-                    },
-                    maxLength: {
-                      value: 20,
-                      message: "Please enter the password in 20 digits or less",
-                    },
+                    // minLength: {
+                    //   value: 8,
+                    //   message:
+                    //     "Please enter at least 8 digits of your password",
+                    // },
+                    // maxLength: {
+                    //   value: 20,
+                    //   message: "Please enter the password in 20 digits or less",
+                    // },
                   })}
                 />
                 {errors?.user_email?.message ? (
                   <ErrorMessage>{errors?.user_email?.message}</ErrorMessage>
+                ) : null}
+              </InputSet>
+              <InputSet>
+                <Label htmlFor="image">이미지</Label>
+                <Input
+                  id="image"
+                  type="file"
+                  accept="image/*"
+                  {...register("image")}
+                />
+                {errors?.category?.message ? (
+                  <ErrorMessage>{errors?.category?.message}</ErrorMessage>
                 ) : null}
               </InputSet>
               <Button type="submit">회원가입</Button>

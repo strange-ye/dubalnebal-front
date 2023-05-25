@@ -13,6 +13,7 @@ import BoardWrite from "./screens/Board/BoardWrite";
 import PartyWrite from "./screens/Party/PartyWrite";
 import Profile from "./screens/User/Profile";
 import BoardUpdate from "./screens/Board/BoardUpdate";
+import Youtube from "./screens/Youtube/Youtube";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,11 @@ const router = createBrowserRouter([
       {
         path: "user/profile",
         element: <Profile />,
+        errorElement: <Error />,
+      },
+      {
+        path: "youtube",
+        element: <Youtube />,
         errorElement: <Error />,
       },
     ],

@@ -8,8 +8,14 @@ import "../../styles/calendar.css";
 import moment from "moment";
 import CustomCalendar from "../../components/CustomCalendar";
 import axios from "axios";
+import Image from "../../util/image";
+import HumanDog from "../../image/HumanDog.png";
 
-const Container = styled.div``;
+const Container = styled.div`
+  background-color: rgb(255, 251, 245);
+  width: 100%;
+  height: 100vh;
+`;
 
 const WindowContainer = styled.div`
   flex: 1;
@@ -17,12 +23,13 @@ const WindowContainer = styled.div`
   display: flex;
   flex-direction: row;
 
-  background-color: #f2f4f5;
+  background-color: rgb(255, 251, 245);
 `;
 
 const WindowLeft = styled.div`
   flex: 1;
   padding-left: 64px;
+  /* padding-right: 128px */
   display: flex;
   flex-direction: column;
   gap: 64px;
@@ -31,6 +38,9 @@ const WindowLeft = styled.div`
 const WindowRight = styled.div`
   flex: 1;
   padding-right: 64px;
+
+  display: flex;
+  justify-content: center;
 `;
 
 const ProfileContainer = styled.div`
@@ -40,7 +50,7 @@ const ProfileContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  background-color: #f2f4f5;
+  background-color: rgb(255, 251, 245);
 `;
 
 const ProfileHeader = styled.div`
@@ -68,6 +78,7 @@ const UserContainer = styled.div`
 
   height: fit-content;
   width: 100%;
+  padding-right: 128px;
   box-sizing: border-box;
 `;
 
@@ -100,6 +111,9 @@ const UserId = styled.div`
 const UserImage = styled.img`
   width: 96px;
   height: 96px;
+  border-radius: 50%;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 `;
 
 const UserRight = styled.div`
@@ -121,6 +135,7 @@ const Icon = styled.div`
 `;
 
 const BoardContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -133,6 +148,7 @@ const BoardTitle = styled.div`
 `;
 
 const BoardList = styled.ul`
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -165,6 +181,7 @@ export default function Profile() {
         },
       })
         .then((res) => {
+          console.log(res.data);
           setBoardData(res.data);
         })
         .catch((err) => console.log(err));
@@ -184,7 +201,7 @@ export default function Profile() {
           <ProfileContainer>
             <UserContainer>
               <UserLeft>
-                <UserImage src={profileImage} />
+                <UserImage src={Image(userData.user_image)} />
                 <UserInfo>
                   <UserName>{userData.user_name}</UserName>
                   <UserEmail>{userData.user_email}</UserEmail>

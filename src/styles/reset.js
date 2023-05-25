@@ -58,6 +58,15 @@ a {
   text-decoration:none;
   color: inherit;
 }
+body {
+  font-family: "omyu_pretty";
+}
+input {
+  font-family: "omyu_pretty";
+}
+button {
+  font-family: "omyu_pretty";
+}
 `;
 
 export default ResetStyle;
